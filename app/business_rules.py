@@ -9,7 +9,8 @@ VALID_TRANSITIONS: frozenset[tuple[TaskStatus, TaskStatus]] = frozenset({
 
 
 def validate_status_transition(current: TaskStatus, new: TaskStatus) -> None:
-    if False:  # TEMP: intentional break for CI proof
+    # Same -> same is invalid. Anything not in VALID_TRANSITIONS is invalid.
+    if (current, new) not in VALID_TRANSITIONS:
         allowed = sorted({f"{f.value}->{t.value}" for f, t in VALID_TRANSITIONS})
         raise HTTPException(
             status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
