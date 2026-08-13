@@ -13,6 +13,33 @@
   h1 {
     margin: 0 0 20px;
   }
+  .header-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  #new-task-btn {
+    padding: 8px 14px;
+    cursor: pointer;
+  }
+  .filter-bar {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 16px 0;
+    font-size: 13px;
+  }
+  .filter-bar label {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .filter-bar input[type="text"] {
+    padding: 5px 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font: inherit;
+  }
   .board {
     display: flex;
     gap: 16px;
@@ -42,680 +69,661 @@
     font-size: 12px;
     color: #555;
   }
+  .card .edit-btn, .card .delete-btn {
+    margin-top: 6px;
+    margin-right: 6px;
+    cursor: pointer;
+  }
   .status-message {
     padding: 8px;
     color: #555;
   }
   .error-banner {
-  background: #ffe1e1;
-  border: 1px solid #d32f2f;
-  color: #b71c1c;
-  padding: 10px 14px;
-  border-radius: 6px;
-  margin-bottom: 16px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.error-banner button {
-  margin-left: 12px;
-}
-.card.dragging {
-  opacity: 0.5;
-}
-.cards.drag-over {
-  background: #d0e8ff;
-  border-radius: 6px;
-}
-.header-bar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.filter-bar {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  margin-bottom: 16px;
-  font-size: 13px;
-}
-.filter-bar label {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-.filter-bar input[type="text"] {
-  padding: 5px 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font: inherit;
-}
-.due-date {
-  font-size: 12px;
-  color: #555;
-  margin-top: 4px;
-}
-.overdue-pill {
-  display: inline-block;
-  background: #d32f2f;
-  color: white;
-  font-size: 11px;
-  font-weight: 600;
-  padding: 2px 7px;
-  border-radius: 10px;
-  margin-top: 4px;
-}
-.tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px;
-  margin-top: 6px;
-}
-.tag-chip {
-  background: #e0e7ff;
-  color: #3730a3;
-  font-size: 11px;
-  padding: 2px 8px;
-  border-radius: 10px;
-}
-.modal-overlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.4);
-  align-items: center;
-  justify-content: center;
-  z-index: 100;
-}
-.modal-overlay.open {
-  display: flex;
-}
-.modal {
-  position: relative;
-  background: white;
-  border-radius: 8px;
-  padding: 20px;
-  width: 360px;
-  max-width: 90vw;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
-}
-.modal h2 {
-  margin: 0 0 16px;
-  font-size: 18px;
-}
-.modal .field {
-  margin-bottom: 12px;
-}
-.modal label {
-  display: block;
-  font-size: 13px;
-  font-weight: 600;
-  margin-bottom: 4px;
-}
-.modal input[type="text"],
-.modal input[type="date"],
-.modal textarea,
-.modal select {
-  width: 100%;
-  box-sizing: border-box;
-  padding: 6px 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font: inherit;
-}
-.modal textarea {
-  resize: vertical;
-  min-height: 60px;
-}
-.modal .field-hint {
-  font-size: 11px;
-  color: #777;
-  margin-top: 2px;
-}
-.modal .field-error {
-  color: #b71c1c;
-  font-size: 12px;
-  margin-top: 4px;
-}
-.modal .form-error {
-  background: #ffe1e1;
-  border: 1px solid #d32f2f;
-  color: #b71c1c;
-  padding: 8px 10px;
-  border-radius: 4px;
-  margin-bottom: 12px;
-  font-size: 13px;
-}
-.modal .modal-actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 8px;
-  margin-top: 16px;
-}
-.modal .close-btn {
-  position: absolute;
-  top: 12px;
-  right: 16px;
-  background: none;
-  border: none;
-  font-size: 18px;
-  cursor: pointer;
-}
+    background: #ffe1e1;
+    border: 1px solid #d32f2f;
+    color: #b71c1c;
+    padding: 10px 14px;
+    border-radius: 6px;
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .error-banner button {
+    margin-left: 12px;
+  }
+  .card.dragging {
+    opacity: 0.5;
+  }
+  .cards.drag-over {
+    background: #d0e8ff;
+    border-radius: 6px;
+  }
+  .due-date {
+    font-size: 12px;
+    color: #555;
+    margin-top: 4px;
+  }
+  .overdue-pill {
+    display: inline-block;
+    background: #d32f2f;
+    color: white;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 7px;
+    border-radius: 10px;
+    margin-top: 4px;
+  }
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-top: 6px;
+  }
+  .tag-chip {
+    background: #e0e7ff;
+    color: #3730a3;
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 10px;
+  }
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+  }
+  .modal-overlay.open {
+    display: flex;
+  }
+  .modal {
+    position: relative;
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    width: 360px;
+    max-width: 90vw;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+  }
+  .modal h2 {
+    margin: 0 0 16px;
+    font-size: 18px;
+  }
+  .modal .field {
+    margin-bottom: 12px;
+  }
+  .modal label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .modal input[type="text"],
+  .modal input[type="date"],
+  .modal textarea,
+  .modal select {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 6px 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font: inherit;
+  }
+  .modal textarea {
+    resize: vertical;
+    min-height: 60px;
+  }
+  .modal .field-hint {
+    font-size: 11px;
+    color: #777;
+    margin-top: 2px;
+  }
+  .modal .field-error {
+    color: #b71c1c;
+    font-size: 12px;
+    margin-top: 4px;
+  }
+  .modal .form-error {
+    background: #ffe1e1;
+    border: 1px solid #d32f2f;
+    color: #b71c1c;
+    padding: 8px 10px;
+    border-radius: 4px;
+    margin-bottom: 12px;
+    font-size: 13px;
+  }
+  .modal .modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 16px;
+  }
+  .modal .close-btn {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+  }
 </style>
 </head>
 <body>
+
 <header>
-    <div class="header-bar">
-      <div>
-        <h1>Task Tracker</h1>
-        <p>A simple Kanban board for tracking tasks.</p>
+  <div class="header-bar">
+    <div>
+      <h1>Task Tracker</h1>
+      <p>A simple Kanban board for tracking tasks.</p>
+    </div>
+    <button id="new-task-btn" type="button">New Task</button>
+  </div>
+</header>
+
+<div class="filter-bar">
+  <label>
+    <input type="checkbox" id="overdue-filter">
+    Overdue only
+  </label>
+  <label>
+    Tag:
+    <input type="text" id="tag-filter" placeholder="e.g. urgent">
+  </label>
+  <button type="button" id="clear-filters-btn">Clear filters</button>
+</div>
+
+<div class="board">
+  <div class="column" data-status="ToDo">
+    <h2>To Do</h2>
+    <div class="cards"></div>
+  </div>
+  <div class="column" data-status="InProgress">
+    <h2>In Progress</h2>
+    <div class="cards"></div>
+  </div>
+  <div class="column" data-status="Done">
+    <h2>Done</h2>
+    <div class="cards"></div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <button type="button" class="close-btn" id="modal-close-btn" aria-label="Close">&times;</button>
+    <h2 id="modal-title">New Task</h2>
+    <div class="form-error" id="modal-form-error" style="display:none;" aria-live="assertive"></div>
+    <form id="task-form">
+      <input type="hidden" id="task-id-field">
+      <div class="field">
+        <label for="title-field">Title</label>
+        <input type="text" id="title-field">
+        <div class="field-error" id="title-error" style="display:none;"></div>
       </div>
-      <button id="new-task-btn" type="button">New Task</button>
-    </div>
-  </header>
-
-  <div class="filter-bar">
-    <label>
-      <input type="checkbox" id="overdue-filter">
-      Overdue only
-    </label>
-    <label>
-      Tag:
-      <input type="text" id="tag-filter" placeholder="e.g. urgent">
-    </label>
-    <button type="button" id="clear-filters-btn">Clear filters</button>
+      <div class="field">
+        <label for="description-field">Description</label>
+        <textarea id="description-field"></textarea>
+      </div>
+      <div class="field">
+        <label for="status-field">Status</label>
+        <select id="status-field">
+          <option value="ToDo">To Do</option>
+          <option value="InProgress">In Progress</option>
+          <option value="Done">Done</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="priority-field">Priority</label>
+        <select id="priority-field">
+          <option value="High">High</option>
+          <option value="Medium">Medium</option>
+          <option value="Low">Low</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="assignee-field">Assignee</label>
+        <input type="text" id="assignee-field">
+      </div>
+      <div class="field">
+        <label for="due-date-field">Due date</label>
+        <input type="date" id="due-date-field">
+      </div>
+      <div class="field">
+        <label for="tags-field">Tags</label>
+        <input type="text" id="tags-field" placeholder="urgent, backend">
+        <div class="field-hint">Comma-separated</div>
+      </div>
+      <div class="modal-actions">
+        <button type="button" id="modal-cancel-btn">Cancel</button>
+        <button type="submit" id="modal-save-btn">Save</button>
+      </div>
+    </form>
   </div>
+</div>
 
-  <div class="board">
-    <div class="column" data-status="ToDo">
-      <h2>To Do</h2>
-      <div class="cards"></div>
-    </div>
+<script>
+  const API_BASE = "http://localhost:8000";
 
-    <div class="column" data-status="InProgress">
-      <h2>In Progress</h2>
-      <div class="cards"></div>
-    </div>
+  const board = document.querySelector(".board");
+  const columns = {
+    ToDo: document.querySelector('[data-status="ToDo"] .cards'),
+    InProgress: document.querySelector('[data-status="InProgress"] .cards'),
+    Done: document.querySelector('[data-status="Done"] .cards'),
+  };
 
-    <div class="column" data-status="Done">
-      <h2>Done</h2>
-      <div class="cards"></div>
-    </div>
-  </div>
+  let tasks = [];
+  let errorBanner = null;
 
-  <div class="modal-overlay" id="modal-overlay">
-    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-      <button type="button" class="close-btn" id="modal-close-btn" aria-label="Close">&times;</button>
-      <h2 id="modal-title">New Task</h2>
-      <div class="form-error" id="modal-form-error" style="display:none;" aria-live="assertive"></div>
-      <form id="task-form">
-        <input type="hidden" id="task-id-field">
-        <div class="field">
-          <label for="title-field">Title</label>
-          <input type="text" id="title-field">
-          <div class="field-error" id="title-error" style="display:none;"></div>
-        </div>
-        <div class="field">
-          <label for="description-field">Description</label>
-          <textarea id="description-field"></textarea>
-        </div>
-        <div class="field">
-          <label for="status-field">Status</label>
-          <select id="status-field">
-            <option value="ToDo">To Do</option>
-            <option value="InProgress">In Progress</option>
-            <option value="Done">Done</option>
-          </select>
-        </div>
-        <div class="field">
-          <label for="priority-field">Priority</label>
-          <select id="priority-field">
-            <option value="High">High</option>
-            <option value="Medium">Medium</option>
-            <option value="Low">Low</option>
-          </select>
-        </div>
-        <div class="field">
-          <label for="assignee-field">Assignee</label>
-          <input type="text" id="assignee-field">
-        </div>
-        <div class="field">
-          <label for="due-date-field">Due date</label>
-          <input type="date" id="due-date-field">
-        </div>
-        <div class="field">
-          <label for="tags-field">Tags</label>
-          <input type="text" id="tags-field" placeholder="urgent, backend">
-          <div class="field-hint">Comma-separated</div>
-        </div>
-        <div class="modal-actions">
-          <button type="button" id="modal-cancel-btn">Cancel</button>
-          <button type="submit" id="modal-save-btn">Save</button>
-        </div>
-      </form>
-    </div>
-  </div>
+  // ---- Filter state ----
+  const overdueFilterInput = document.getElementById("overdue-filter");
+  const tagFilterInput = document.getElementById("tag-filter");
 
-  <script>
-    const API_BASE = "http://localhost:8000";
+  // ---- Modal DOM references ----
+  const modalOverlay = document.getElementById("modal-overlay");
+  const modalTitle = document.getElementById("modal-title");
+  const modalFormError = document.getElementById("modal-form-error");
+  const taskForm = document.getElementById("task-form");
+  const taskIdField = document.getElementById("task-id-field");
+  const titleField = document.getElementById("title-field");
+  const titleError = document.getElementById("title-error");
+  const descriptionField = document.getElementById("description-field");
+  const statusField = document.getElementById("status-field");
+  const priorityField = document.getElementById("priority-field");
+  const assigneeField = document.getElementById("assignee-field");
+  const dueDateField = document.getElementById("due-date-field");
+  const tagsField = document.getElementById("tags-field");
 
-    const board = document.querySelector(".board");
-    const columns = {
-      ToDo: document.querySelector('[data-status="ToDo"] .cards'),
-      InProgress: document.querySelector('[data-status="InProgress"] .cards'),
-      Done: document.querySelector('[data-status="Done"] .cards'),
+  function clearModalErrors() {
+    modalFormError.style.display = "none";
+    modalFormError.textContent = "";
+    titleError.style.display = "none";
+    titleError.textContent = "";
+  }
+
+  function getModalFields() {
+    return {
+      id: taskIdField.value,
+      title: titleField.value,
+      description: descriptionField.value,
+      status: statusField.value,
+      priority: priorityField.value,
+      assignee: assigneeField.value,
+      due_date: dueDateField.value,
+      tags: tagsField.value,
+    };
+  }
+
+  function setModalFields(task) {
+    taskIdField.value = task.id ?? "";
+    titleField.value = task.title ?? "";
+    descriptionField.value = task.description ?? "";
+    statusField.value = task.status ?? "ToDo";
+    priorityField.value = task.priority ?? "Medium";
+    assigneeField.value = task.assignee ?? "";
+    dueDateField.value = task.due_date ?? "";
+    tagsField.value = (task.tags || []).join(", ");
+  }
+
+  function openModal(mode, task) {
+    clearModalErrors();
+    if (mode === "edit" && task) {
+      modalTitle.textContent = "Edit Task";
+      setModalFields(task);
+    } else {
+      modalTitle.textContent = "New Task";
+      taskForm.reset();
+      setModalFields({});
+    }
+    modalOverlay.classList.add("open");
+    titleField.focus();
+  }
+
+  function closeModal() {
+    modalOverlay.classList.remove("open");
+    clearModalErrors();
+    taskForm.reset();
+  }
+
+  function parseTags(rawValue) {
+    return rawValue
+      .split(",")
+      .map((t) => t.trim())
+      .filter((t) => t.length > 0);
+  }
+
+  async function handleTaskFormSubmit(e) {
+    e.preventDefault();
+    clearModalErrors();
+
+    const fields = getModalFields();
+    const title = fields.title.trim();
+    if (!title) {
+      titleError.textContent = "Title is required";
+      titleError.style.display = "block";
+      return;
+    }
+
+    const taskId = fields.id;
+    const payload = {
+      title,
+      description: fields.description.trim(),
+      status: fields.status,
+      priority: fields.priority,
+      assignee: fields.assignee.trim() || null,
+      due_date: fields.due_date || null,
+      tags: parseTags(fields.tags),
     };
 
-    let tasks = [];
-    let errorBanner = null;
+    const isEdit = Boolean(taskId);
+    const url = isEdit ? `${API_BASE}/tasks/${taskId}` : `${API_BASE}/tasks`;
+    const method = isEdit ? "PATCH" : "POST";
 
-    // ---- Filter state ----
-    const overdueFilterInput = document.getElementById("overdue-filter");
-    const tagFilterInput = document.getElementById("tag-filter");
+    try {
+      const response = await fetch(url, {
+        method,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
 
-    // ---- Modal DOM references ----
-    const modalOverlay = document.getElementById("modal-overlay");
-    const modalTitle = document.getElementById("modal-title");
-    const modalFormError = document.getElementById("modal-form-error");
-    const taskForm = document.getElementById("task-form");
-    const taskIdField = document.getElementById("task-id-field");
-    const titleField = document.getElementById("title-field");
-    const titleError = document.getElementById("title-error");
-    const descriptionField = document.getElementById("description-field");
-    const statusField = document.getElementById("status-field");
-    const priorityField = document.getElementById("priority-field");
-    const assigneeField = document.getElementById("assignee-field");
-    const dueDateField = document.getElementById("due-date-field");
-    const tagsField = document.getElementById("tags-field");
-
-    function clearModalErrors() {
-      modalFormError.style.display = "none";
-      modalFormError.textContent = "";
-      titleError.style.display = "none";
-      titleError.textContent = "";
-    }
-
-    function getModalFields() {
-      return {
-        id: taskIdField.value,
-        title: titleField.value,
-        description: descriptionField.value,
-        status: statusField.value,
-        priority: priorityField.value,
-        assignee: assigneeField.value,
-        due_date: dueDateField.value,
-        tags: tagsField.value,
-      };
-    }
-
-    function setModalFields(task) {
-      taskIdField.value = task.id ?? "";
-      titleField.value = task.title ?? "";
-      descriptionField.value = task.description ?? "";
-      statusField.value = task.status ?? "ToDo";
-      priorityField.value = task.priority ?? "Medium";
-      assigneeField.value = task.assignee ?? "";
-      dueDateField.value = task.due_date ?? "";
-      tagsField.value = (task.tags || []).join(", ");
-    }
-
-    function openModal(mode, task) {
-      clearModalErrors();
-      if (mode === "edit" && task) {
-        modalTitle.textContent = "Edit Task";
-        setModalFields(task);
-      } else {
-        modalTitle.textContent = "New Task";
-        taskForm.reset();
-        setModalFields({});
-      }
-      modalOverlay.classList.add("open");
-      titleField.focus();
-    }
-
-    function closeModal() {
-      modalOverlay.classList.remove("open");
-      clearModalErrors();
-      taskForm.reset();
-    }
-
-    function parseTags(rawValue) {
-      return rawValue
-        .split(",")
-        .map((t) => t.trim())
-        .filter((t) => t.length > 0);
-    }
-
-    async function handleTaskFormSubmit(e) {
-      e.preventDefault();
-      clearModalErrors();
-
-      const fields = getModalFields();
-      const title = fields.title.trim();
-      if (!title) {
-        titleError.textContent = "Title is required";
-        titleError.style.display = "block";
+      if (!response.ok) {
+        const errorBody = await response.json().catch(() => null);
+        const message = errorBody?.detail || `Server returned ${response.status}`;
+        modalFormError.textContent = message;
+        modalFormError.style.display = "block";
         return;
       }
 
-      const taskId = fields.id;
-      const payload = {
-        title,
-        description: fields.description.trim(),
-        status: fields.status,
-        priority: fields.priority,
-        assignee: fields.assignee.trim() || null,
-        due_date: fields.due_date || null,
-        tags: parseTags(fields.tags),
-      };
+      closeModal();
+      fetchTasks();
+    } catch (err) {
+      modalFormError.textContent = "Network error. Could not save task.";
+      modalFormError.style.display = "block";
+      console.error(err);
+    }
+  }
 
-      const isEdit = Boolean(taskId);
-      const url = isEdit ? `${API_BASE}/tasks/${taskId}` : `${API_BASE}/tasks`;
-      const method = isEdit ? "PATCH" : "POST";
+  function setupModal() {
+    document.getElementById("new-task-btn").addEventListener("click", () => {
+      openModal("create");
+    });
 
-      try {
-        const response = await fetch(url, {
-          method,
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        });
+    board.addEventListener("click", (e) => {
+      if (e.target.classList.contains("edit-btn")) {
+        const card = e.target.closest(".card");
+        const taskId = card?.dataset.taskId;
+        const task = tasks.find((t) => t.id === taskId);
+        if (task) openModal("edit", task);
+      }
 
-        if (!response.ok) {
-          const errorBody = await response.json().catch(() => null);
-          const message = errorBody?.detail || `Server returned ${response.status}`;
-          modalFormError.textContent = message;
-          modalFormError.style.display = "block";
-          return;
-        }
+      if (e.target.classList.contains("delete-btn")) {
+        const card = e.target.closest(".card");
+        const taskId = card?.dataset.taskId;
+        const task = tasks.find((t) => t.id === taskId);
+        if (!task) return;
+        const confirmed = confirm(`Delete "${task.title}"? This cannot be undone.`);
+        if (confirmed) deleteTask(taskId);
+      }
+    });
 
+    document.getElementById("modal-close-btn").addEventListener("click", closeModal);
+    document.getElementById("modal-cancel-btn").addEventListener("click", closeModal);
+
+    modalOverlay.addEventListener("click", (e) => {
+      if (e.target === modalOverlay) closeModal();
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && modalOverlay.classList.contains("open")) {
         closeModal();
+      }
+    });
+
+    taskForm.addEventListener("submit", handleTaskFormSubmit);
+  }
+
+  function setupFilters() {
+    overdueFilterInput.addEventListener("change", fetchTasks);
+    tagFilterInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
         fetchTasks();
-      } catch (err) {
-        modalFormError.textContent = "Network error. Could not save task.";
-        modalFormError.style.display = "block";
-        console.error(err);
+      }
+    });
+    tagFilterInput.addEventListener("blur", fetchTasks);
+
+    document.getElementById("clear-filters-btn").addEventListener("click", () => {
+      overdueFilterInput.checked = false;
+      tagFilterInput.value = "";
+      fetchTasks();
+    });
+  }
+
+  // ---- Board rendering ----
+  function escapeHtml(str) {
+    const div = document.createElement("div");
+    div.textContent = str ?? "";
+    return div.innerHTML;
+  }
+
+  const priorityOrder = { High: 0, Medium: 1, Low: 2 };
+
+  function sortTasks(taskList) {
+    return [...taskList].sort((a, b) => {
+      const priorityDiff = priorityOrder[a.priority] - priorityOrder[b.priority];
+      if (priorityDiff !== 0) return priorityDiff;
+      return a.id < b.id ? -1 : a.id > b.id ? 1 : 0;
+    });
+  }
+
+  function clearErrorBanner() {
+    if (errorBanner) {
+      errorBanner.remove();
+      errorBanner = null;
+    }
+  }
+
+  function showLoading() {
+    clearErrorBanner();
+    for (const status in columns) {
+      columns[status].innerHTML = `<div class="status-message">Loading...</div>`;
+    }
+  }
+
+  function showError(message) {
+    clearErrorBanner();
+    errorBanner = document.createElement("div");
+    errorBanner.className = "error-banner";
+    errorBanner.innerHTML = `
+      <span>${escapeHtml(message)}</span>
+      <button id="retry-btn">Retry</button>
+    `;
+    board.parentElement.insertBefore(errorBanner, board);
+    document.getElementById("retry-btn").addEventListener("click", fetchTasks);
+
+    for (const status in columns) {
+      columns[status].innerHTML = `<div class="status-message">Unable to load</div>`;
+    }
+  }
+
+  function createCardElement(task) {
+    const card = document.createElement("div");
+    card.className = "card";
+    card.draggable = true;
+    card.dataset.taskId = task.id;
+
+    const dueDateHtml = task.due_date
+      ? `<div class="due-date">Due: ${escapeHtml(task.due_date)}</div>`
+      : "";
+    const overduePillHtml = task.is_overdue
+      ? `<div class="overdue-pill">Overdue</div>`
+      : "";
+    const tagsHtml = (task.tags && task.tags.length > 0)
+      ? `<div class="tags">${task.tags.map((t) => `<span class="tag-chip">${escapeHtml(t)}</span>`).join("")}</div>`
+      : "";
+
+    card.innerHTML = `
+      <div class="title">${escapeHtml(task.title)}</div>
+      <div class="description">${escapeHtml(task.description)}</div>
+      <div class="priority">${escapeHtml(task.priority)}</div>
+      <div class="assignee">${escapeHtml(task.assignee) || "Unassigned"}</div>
+      ${dueDateHtml}
+      ${overduePillHtml}
+      ${tagsHtml}
+      <button class="edit-btn" type="button">Edit</button>
+      <button class="delete-btn" type="button">Delete</button>
+    `;
+    card.addEventListener("dragstart", (e) => {
+      e.dataTransfer.setData("text/plain", task.id);
+      card.classList.add("dragging");
+    });
+    card.addEventListener("dragend", () => {
+      card.classList.remove("dragging");
+    });
+    return card;
+  }
+
+  function renderBoard(taskList) {
+    clearErrorBanner();
+
+    const grouped = { ToDo: [], InProgress: [], Done: [] };
+    for (const task of taskList) {
+      if (grouped[task.status]) {
+        grouped[task.status].push(task);
       }
     }
 
-    function setupModal() {
-      document.getElementById("new-task-btn").addEventListener("click", () => {
-        openModal("create");
-      });
+    for (const status in columns) {
+      const container = columns[status];
+      const sorted = sortTasks(grouped[status]);
+      container.innerHTML = "";
 
-      board.addEventListener("click", (e) => {
-        if (e.target.classList.contains("edit-btn")) {
-          const card = e.target.closest(".card");
-          const taskId = card?.dataset.taskId;
-          const task = tasks.find((t) => t.id === taskId);
-          if (task) openModal("edit", task);
-        }
-
-        if (e.target.classList.contains("delete-btn")) {
-          const card = e.target.closest(".card");
-          const taskId = card?.dataset.taskId;
-          const task = tasks.find((t) => t.id === taskId);
-          if (!task) return;
-          const confirmed = confirm(`Delete "${task.title}"? This cannot be undone.`);
-          if (confirmed) deleteTask(taskId);
-        }
-      });
-
-      document.getElementById("modal-close-btn").addEventListener("click", closeModal);
-      document.getElementById("modal-cancel-btn").addEventListener("click", closeModal);
-
-      modalOverlay.addEventListener("click", (e) => {
-        if (e.target === modalOverlay) closeModal();
-      });
-
-      document.addEventListener("keydown", (e) => {
-        if (e.key === "Escape" && modalOverlay.classList.contains("open")) {
-          closeModal();
-        }
-      });
-
-      taskForm.addEventListener("submit", handleTaskFormSubmit);
-    }
-
-    function setupFilters() {
-      overdueFilterInput.addEventListener("change", fetchTasks);
-      tagFilterInput.addEventListener("keydown", (e) => {
-        if (e.key === "Enter") {
-          e.preventDefault();
-          fetchTasks();
-        }
-      });
-      tagFilterInput.addEventListener("blur", fetchTasks);
-
-      document.getElementById("clear-filters-btn").addEventListener("click", () => {
-        overdueFilterInput.checked = false;
-        tagFilterInput.value = "";
-        fetchTasks();
-      });
-    }
-
-    // ---- Board rendering ----
-    function escapeHtml(str) {
-      const div = document.createElement("div");
-      div.textContent = str ?? "";
-      return div.innerHTML;
-    }
-
-    const priorityOrder = { High: 0, Medium: 1, Low: 2 };
-
-    function sortTasks(taskList) {
-      return [...taskList].sort((a, b) => {
-        const priorityDiff = priorityOrder[a.priority] - priorityOrder[b.priority];
-        if (priorityDiff !== 0) return priorityDiff;
-        return a.id < b.id ? -1 : a.id > b.id ? 1 : 0;
-      });
-    }
-
-    function clearErrorBanner() {
-      if (errorBanner) {
-        errorBanner.remove();
-        errorBanner = null;
-      }
-    }
-
-    function showLoading() {
-      clearErrorBanner();
-      for (const status in columns) {
-        columns[status].innerHTML = `<div class="status-message">Loading...</div>`;
-      }
-    }
-
-    function showError(message) {
-      clearErrorBanner();
-      errorBanner = document.createElement("div");
-      errorBanner.className = "error-banner";
-      errorBanner.innerHTML = `
-        <span>${escapeHtml(message)}</span>
-        <button id="retry-btn">Retry</button>
-      `;
-      board.parentElement.insertBefore(errorBanner, board);
-      document.getElementById("retry-btn").addEventListener("click", fetchTasks);
-
-      for (const status in columns) {
-        columns[status].innerHTML = `<div class="status-message">Unable to load</div>`;
-      }
-    }
-
-    function createCardElement(task) {
-      const card = document.createElement("div");
-      card.className = "card";
-      card.draggable = true;
-      card.dataset.taskId = task.id;
-
-      const dueDateHtml = task.due_date
-        ? `<div class="due-date">Due: ${escapeHtml(task.due_date)}</div>`
-        : "";
-      const overduePillHtml = task.is_overdue
-        ? `<div class="overdue-pill">Overdue</div>`
-        : "";
-      const tagsHtml = (task.tags && task.tags.length > 0)
-        ? `<div class="tags">${task.tags.map((t) => `<span class="tag-chip">${escapeHtml(t)}</span>`).join("")}</div>`
-        : "";
-
-      card.innerHTML = `
-        <div class="title">${escapeHtml(task.title)}</div>
-        <div class="description">${escapeHtml(task.description)}</div>
-        <div class="priority">${escapeHtml(task.priority)}</div>
-        <div class="assignee">${escapeHtml(task.assignee) || "Unassigned"}</div>
-        ${dueDateHtml}
-        ${overduePillHtml}
-        ${tagsHtml}
-        <button class="edit-btn">Edit</button>
-        <button class="delete-btn">Delete</button>
-      `;
-      card.addEventListener("dragstart", (e) => {
-        e.dataTransfer.setData("text/plain", task.id);
-        card.classList.add("dragging");
-      });
-      card.addEventListener("dragend", () => {
-        card.classList.remove("dragging");
-      });
-      return card;
-    }
-
-    function renderBoard(taskList) {
-      clearErrorBanner();
-
-      const grouped = { ToDo: [], InProgress: [], Done: [] };
-      for (const task of taskList) {
-        if (grouped[task.status]) {
-          grouped[task.status].push(task);
-        }
+      if (sorted.length === 0) {
+        container.innerHTML = `<div class="status-message">No tasks</div>`;
+        continue;
       }
 
-      for (const status in columns) {
-        const container = columns[status];
-        const sorted = sortTasks(grouped[status]);
-        container.innerHTML = "";
-
-        if (sorted.length === 0) {
-          container.innerHTML = `<div class="status-message">No tasks</div>`;
-          continue;
-        }
-
-        for (const task of sorted) {
-          container.appendChild(createCardElement(task));
-        }
+      for (const task of sorted) {
+        container.appendChild(createCardElement(task));
       }
     }
+  }
 
-    function buildQueryString() {
-      const params = new URLSearchParams();
-      if (overdueFilterInput.checked) {
-        params.set("overdue", "true");
-      }
-      const tagValue = tagFilterInput.value.trim();
-      if (tagValue) {
-        params.set("tag", tagValue);
-      }
-      const qs = params.toString();
-      return qs ? `?${qs}` : "";
+  function buildQueryString() {
+    const params = new URLSearchParams();
+    if (overdueFilterInput.checked) {
+      params.set("overdue", "true");
     }
-
-    async function fetchTasks() {
-      showLoading();
-      try {
-        const response = await fetch(`${API_BASE}/tasks${buildQueryString()}`);
-        if (!response.ok) {
-          throw new Error(`Server returned ${response.status}`);
-        }
-        tasks = await response.json();
-        renderBoard(tasks);
-      } catch (err) {
-        showError("Failed to load tasks. Is the server running?");
-        console.error(err);
-      }
+    const tagValue = tagFilterInput.value.trim();
+    if (tagValue) {
+      params.set("tag", tagValue);
     }
+    const qs = params.toString();
+    return qs ? `?${qs}` : "";
+  }
 
-    async function deleteTask(taskId) {
-      try {
-        const response = await fetch(`${API_BASE}/tasks/${taskId}`, {
-          method: "DELETE",
-        });
-
-        if (!response.ok) {
-          const errorBody = await response.json().catch(() => null);
-          const message = errorBody?.detail || `Server returned ${response.status}`;
-          showError(message);
-          return;
-        }
-
-        tasks = tasks.filter((t) => t.id !== taskId);
-        renderBoard(tasks);
-      } catch (err) {
-        showError("Network error. Could not delete task.");
-        console.error(err);
+  async function fetchTasks() {
+    showLoading();
+    try {
+      const response = await fetch(`${API_BASE}/tasks${buildQueryString()}`);
+      if (!response.ok) {
+        throw new Error(`Server returned ${response.status}`);
       }
-    }
-
-    // ---- Drag and drop ----
-    async function updateTaskStatus(task, targetStatus) {
-      const previousStatus = task.status;
-
-      task.status = targetStatus;
+      tasks = await response.json();
       renderBoard(tasks);
+    } catch (err) {
+      showError("Failed to load tasks. Is the server running?");
+      console.error(err);
+    }
+  }
 
-      try {
-        const response = await fetch(`${API_BASE}/tasks/${task.id}`, {
-          method: "PATCH",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ status: targetStatus }),
-        });
+  async function deleteTask(taskId) {
+    try {
+      const response = await fetch(`${API_BASE}/tasks/${taskId}`, {
+        method: "DELETE",
+      });
 
-        if (!response.ok) {
-          const errorBody = await response.json().catch(() => null);
-          const message = errorBody?.detail || `Server returned ${response.status}`;
-          task.status = previousStatus;
-          renderBoard(tasks);
-          showError(message);
-          return;
-        }
-      } catch (err) {
+      if (!response.ok) {
+        const errorBody = await response.json().catch(() => null);
+        const message = errorBody?.detail || `Server returned ${response.status}`;
+        showError(message);
+        return;
+      }
+
+      tasks = tasks.filter((t) => t.id !== taskId);
+      renderBoard(tasks);
+    } catch (err) {
+      showError("Network error. Could not delete task.");
+      console.error(err);
+    }
+  }
+
+  // ---- Drag and drop ----
+  async function updateTaskStatus(task, targetStatus) {
+    const previousStatus = task.status;
+
+    task.status = targetStatus;
+    renderBoard(tasks);
+
+    try {
+      const response = await fetch(`${API_BASE}/tasks/${task.id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status: targetStatus }),
+      });
+
+      if (!response.ok) {
+        const errorBody = await response.json().catch(() => null);
+        const message = errorBody?.detail || `Server returned ${response.status}`;
         task.status = previousStatus;
         renderBoard(tasks);
-        showError("Network error. Could not update task.");
-        console.error(err);
+        showError(message);
+        return;
       }
+    } catch (err) {
+      task.status = previousStatus;
+      renderBoard(tasks);
+      showError("Network error. Could not update task.");
+      console.error(err);
     }
+  }
 
-    function setupDropZones() {
-      for (const status in columns) {
-        const container = columns[status];
+  function setupDropZones() {
+    for (const status in columns) {
+      const container = columns[status];
 
-        container.addEventListener("dragover", (e) => {
-          e.preventDefault();
-          container.classList.add("drag-over");
-        });
+      container.addEventListener("dragover", (e) => {
+        e.preventDefault();
+        container.classList.add("drag-over");
+      });
 
-        container.addEventListener("dragleave", () => {
-          container.classList.remove("drag-over");
-        });
+      container.addEventListener("dragleave", () => {
+        container.classList.remove("drag-over");
+      });
 
-        container.addEventListener("drop", async (e) => {
-          e.preventDefault();
-          container.classList.remove("drag-over");
+      container.addEventListener("drop", async (e) => {
+        e.preventDefault();
+        container.classList.remove("drag-over");
 
-          const taskId = e.dataTransfer.getData("text/plain");
-          const task = tasks.find(t => t.id === taskId);
-          if (!task) return;
+        const taskId = e.dataTransfer.getData("text/plain");
+        const task = tasks.find(t => t.id === taskId);
+        if (!task) return;
 
-          const targetStatus = status;
-          if (task.status === targetStatus) return;
+        const targetStatus = status;
+        if (task.status === targetStatus) return;
 
-          await updateTaskStatus(task, targetStatus);
-        });
-      }
+        await updateTaskStatus(task, targetStatus);
+      });
     }
+  }
 
-    setupDropZones();
-    setupModal();
-    setupFilters();
-    fetchTasks();
-  </script>
+  setupDropZones();
+  setupModal();
+  setupFilters();
+  fetchTasks();
+</script>
 
 </body>
 </html>

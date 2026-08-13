@@ -1,21 +1,15 @@
 # Task Tracker API
 
-A learning-focused REST API built with Python and FastAPI, using JSON file storage for persistence. It demonstrates core REST API concepts such as routing, request validation, and response modeling, without the overhead of a database or authentication layer.
+A learning-focused REST API built with Python and FastAPI, using in-memory storage for task
+management, plus a vanilla HTML/CSS/JavaScript Kanban board frontend. Built as part of the
+AI-Assisted Coding course (Modules 2-4).
 
 ## Prerequisites
 
-- Python 3.12+
+- Python 3.11+ (course target; developed locally against a newer version)
+- pip
 
----
-
-## 1. Create a virtual environment and install dependencies
-
-**Linux/macOS**
-```bash
-python3 -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
-```
+## Local setup
 
 **Windows (PowerShell)**
 ```powershell
@@ -24,52 +18,91 @@ python -m venv venv
 pip install -r requirements.txt
 ```
 
----
+## Run the app locally
 
-## 2. Configure environment variables
-
-Copy the example file and adjust values as needed:
-
-**Linux/macOS**
-```bash
-cp .env.example .env
-```
-
-**Windows (PowerShell)**
-```powershell
-Copy-Item .env.example .env
-```
-
----
-
-## 3. Start the server
-
-**Linux/macOS**
-```bash
-uvicorn app.main:app --reload --port 8000
-```
-
-**Windows (PowerShell)**
 ```powershell
 uvicorn app.main:app --reload --port 8000
 ```
 
-The API will be available at `http://localhost:8000`.
-Interactive docs (Swagger UI) are at `http://localhost:8000/docs`.
+- API base URL: `http://localhost:8000`
+- Interactive docs (Swagger UI): `http://localhost:8000/docs`
+- Frontend: open `frontend/index.html` directly in a browser
 
----
+## Run tests
 
-## 4. Test the health endpoint
-
-```bash
-curl -s http://localhost:8000/health
+```powershell
+pytest -v
 ```
 
-Expected response:
+## Run with Docker
 
-```json
-{
-  "status": "ok",
-  "timestamp": "2025-05-16T10:30:00.123456+00:00"
-}
+Build the image:
+```powershell
+docker build -t task-tracker:dev .
 ```
+
+Run the container:
+```powershell
+docker run -d --name tt-dev -p 8000:8000 task-tracker:dev
+```
+
+Verify it's running:
+```powershell
+curl.exe http://localhost:8000/health
+docker exec tt-dev whoami
+```
+
+Stop and remove:
+```powershell
+docker stop tt-dev
+docker rm tt-dev
+```
+
+## CI workflow
+
+GitHub Actions runs on every push and pull request:
+1. Checks out the repo
+2. Sets up Python 3.11
+3. Installs dependencies from `requirements.txt`
+4. Runs `pytest -v`
+
+See `.github/workflows/ci.yml`.
+
+## Project structure
+## Project conventions
+
+- **Status values:** exactly `ToDo`, `InProgress`, `Done`
+- **Priority values:** exactly `Low`, `Medium`, `High`
+- **Valid status transitions:** `ToDo → InProgress`, `InProgress → Done`, `Done → InProgress`.
+  Same-status and skip-ahead transitions are rejected with HTTP 422.
+- **Storage:** in-memory only. Data is lost on server restart. No database.
+- **No authentication** — a learning-project scope decision, documented in `docs/security-review.md`.
+
+## Current limitations
+
+- No persistence across restarts
+- No authentication or authorization
+- No real-time sync between multiple open browser tabs
+- CORS is currently permissive (`allow_origins=["*"]`) for local development
+
+## Decision notes
+
+See `docs/decisions/` for technical decision records.
+task-tracker/
+├── app/
+│ ├── main.py
+│ ├── models.py
+│ ├── storage.py
+│ ├── business_rules.py
+│ ├── core/config.py
+│ └── api/routes/health.py
+├── frontend/
+│ └── index.html
+├── tests/
+│ ├── conftest.py
+│ └── test_tasks.py
+├── Dockerfile
+├── .dockerignore
+├── .github/workflows/ci.yml
+├── requirements.txt
+└── README.md
